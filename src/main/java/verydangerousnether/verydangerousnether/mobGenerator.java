@@ -12,6 +12,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+
+//trying to access config thru this
 public class mobGenerator {
     //rewrite some of the VeryDangerousNether main class
 
