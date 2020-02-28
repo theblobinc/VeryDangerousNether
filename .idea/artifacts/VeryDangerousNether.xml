@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="VeryDangerousNether">
+    <output-path>$USER_HOME$/Desktop/Paper dev server/plugins</output-path>
+    <root id="archive" name="VeryDangerousNether.jar">
+      <element id="module-output" name="VeryDangerousNether" />
+    </root>
+  </artifact>
+</component>

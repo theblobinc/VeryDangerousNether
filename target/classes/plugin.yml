@@ -1,0 +1,11 @@
+name: VeryDangerousNether
+version: 1.0-SNAPSHOT
+main: verydangerousnether.verydangerousnether.VeryDangerousNether
+api-version: 1.15
+
+commands:
+  getworldnamed:
+    description: Gets the name of the world you are in for use in config.
+    usage: /getworldnamed
+    permission: dangern.getworldnamed
+    permission-message: You don't have the dangern.getworldnamed permission.
