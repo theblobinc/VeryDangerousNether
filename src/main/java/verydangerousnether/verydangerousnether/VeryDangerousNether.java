@@ -102,6 +102,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
@@ -139,6 +140,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     static int mushroomchance = 0;
     static int replacerackchance = 0;
     static int nheight = 120;
+    public static VeryDangerousNether plugin;
 
     boolean newFire = false;
 
