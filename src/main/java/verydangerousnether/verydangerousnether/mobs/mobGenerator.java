@@ -1,4 +1,4 @@
-package verydangerousnether.verydangerousnether;
+package verydangerousnether.verydangerousnether.mobs;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import verydangerousnether.verydangerousnether.VeryDangerousNether;
 
 
 //trying to access config thru this
@@ -25,7 +26,7 @@ public class mobGenerator {
 
 // Then use:
 
-    plugin.getConfig("yes ")
+    plugin.getConfig()
 
 // To get configuration stuff
 
