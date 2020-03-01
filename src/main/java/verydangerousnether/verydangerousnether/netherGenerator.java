@@ -87,7 +87,7 @@ public class netherGenerator extends BlockPopulator {
             int cZ = chnk.getZ() * 16;
             int cXOff = cX;
             int cZOff = cZ;
-            if(true) {
+            if(randor.nextInt(100) < VeryDangerousNether.nspikechance) {
                 createSpike2(cXOff + 7, cZOff + 7, wor);
             }
             if(true) {

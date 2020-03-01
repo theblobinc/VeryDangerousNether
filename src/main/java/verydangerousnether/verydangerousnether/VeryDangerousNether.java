@@ -329,7 +329,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         config.addDefault("All Structures Chance ", 0);
         config.addDefault("Web Vine Chance ", 0);
         config.addDefault("Mushroom Chance ", 0);
-        config.addDefault("Nether Spike Chance ", 0);
+        config.addDefault("Nether Spike Chance ", 50);
         config.addDefault("Nether World Height ", 120);
         config.addDefault("Coral Chance  ", 0);
         config.addDefault("Rose Chance ", 0);
