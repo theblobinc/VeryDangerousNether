@@ -22,45 +22,14 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 //import org.bukkit.craftbukkit.libs.org.apache.commons.codec.binary.Base64;
 //import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.Illager;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.SmallFireball;
-import org.bukkit.entity.Witch;
-import org.bukkit.entity.WitherSkeleton;
-import org.bukkit.entity.WitherSkull;
-import org.bukkit.entity.Zombie;
-import org.bukkit.entity.ZombieVillager;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFadeEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.player.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -75,7 +44,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
-import verydangerousnether.verydangerousnether.files.defaultConfig;
 //import net.minecraft.server.v1_14_R1.BlockPosition;
 //import net.minecraft.server.v1_14_R1.TileEntitySkull;
 
@@ -86,11 +54,11 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     public ConsoleCommandSender console = getServer().getConsoleSender();
     Random randor = new Random();
     boolean hasWorlds = false;
-    public static List<String> worlds = new ArrayList<String>();
+    public List<String> worlds = new ArrayList<String>();
     public boolean canSave = false;
     public List<Entity> effectEnts = new ArrayList<Entity>();
     boolean ambients = false;
-    boolean caveents = false;
+    static boolean caveents = false;
     public static List<String> mobNames = new ArrayList<String>();
     int damage = 0;
     static boolean nethstruct = true;
@@ -104,11 +72,13 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     static int replacerackchance = 0;
     static int nheight = 120;
     public static VeryDangerousNether plugin;
+    private static YamlConfiguration configuration;
 
     boolean newFire = false;
 
     @Override
     public void onEnable() {
+        configuration = (YamlConfiguration) getConfig();
         createConfigFol();
         this.getServer().getPluginManager().registerEvents(this, this);
         ambients = config.getBoolean("Enable Ambient Sounds ");
@@ -295,15 +265,20 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         }, 0L, /* 600 */5000L);
 
         //setup config -- This is directly from youtube, might replace createConfigFol() with this later.
-        getConfig().options().copyDefaults();
+        /*getConfig().options().copyDefaults();
         saveDefaultConfig();
 
         defaultConfig.setup();
         defaultConfig.get().addDefault("Taco", "Rice");
         defaultConfig.get().options().copyDefaults(true);
         defaultConfig.save();
-
+         */
     }
+
+    public static YamlConfiguration getDefaultConfig() {
+        return configuration;
+    }
+
     //fix?
     private static boolean getLookingAt2(LivingEntity player, LivingEntity player1) {
         Location eye = player.getEyeLocation();
@@ -787,7 +762,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                 }
                 if(caveents==true) {
                     if (e instanceof PigZombie) {
-                        if (event.getSpawnReason() == SpawnReason.NATURAL && (b.getType()==Material.NETHERRACK || b.getType()==Material.SOUL_SAND)) {
+                        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && (b.getType()==Material.NETHERRACK || b.getType()==Material.SOUL_SAND)) {
                             if(randor.nextInt(config.getInt("Mob Spawn Chance ")+1)==0) {
                                 doMobSpawns(e);
                             }
@@ -800,8 +775,6 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             }
         }
     }
-
-    //
 
     //Nether Lightning
 
@@ -1331,8 +1304,8 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 					myAwesomeSkullMeta.setOwner("Spe");
 					myAwesomeSkull.setItemMeta(myAwesomeSkullMeta);
                     ee.setHelmet(myAwesomeSkull);
-                    /*ee.setHelmet(getSkull("http://textures.minecraft.net/texture/b6965e6a58684c277d18717cec959f2833a72dfa95661019dbcdf3dbf66b048"));
-                     */
+                    //ee.setHelmet(getSkull("http://textures.minecraft.net/texture/b6965e6a58684c277d18717cec959f2833a72dfa95661019dbcdf3dbf66b048"));
+
                     ee.setHelmetDropChance(0);
                     e.setCustomName(name);
                     e.setMetadata(name, new FixedMetadataValue(this, 0));
@@ -1369,12 +1342,12 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 					ee.setHelmet(myAwesomeSkull);
                     //Test that prints to console
                     //console.sendMessage(ChatColor.GREEN + "No idea what this does.. but it runs! Maybe it spawns a Necromancer");
-                    /*ee.setHelmet(getSkull("http://textures.minecraft.net/texture/ee280cefe946911ea90e87ded1b3e18330c63a23af5129dfcfe9a8e166588041"));
+                    //ee.setHelmet(getSkull("http://textures.minecraft.net/texture/ee280cefe946911ea90e87ded1b3e18330c63a23af5129dfcfe9a8e166588041"));
                     ee.setChestplate(lchest);
                     ee.setBoots(lchest3);
                     ee.setItemInMainHand(new ItemStack(Material.BOW));
 
-                     */
+
                 }
                 else if(name.equals(config.getString("Alpha Pigman = "))) {
                     if(e.getType()!=EntityType.PIG_ZOMBIE) {
@@ -1593,7 +1566,6 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         }
     }
 
-    //
 
     //Lava Burns + Better Placement
 
