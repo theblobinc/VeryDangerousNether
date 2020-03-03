@@ -78,7 +78,7 @@ public class netherGenerator extends BlockPopulator {
 
     @Override
     public void populate(World wor, Random rand, Chunk chnk) {
-        if(rand.nextInt(VeryDangerousNether.structchance+1)==0&&VeryDangerousNether.nethstruct==true) {
+        if((rand.nextInt(100) < VeryDangerousNether.structchance) && VeryDangerousNether.nethstruct) {
             //-1 + | 1 == random pillar or shape / boulder 2 == random skeleton skull 3 == random room with stuff or random chest 4 == monsters spawner surrounded 5 == random mineshaft / tunnel 6 == spiders nest small 7 == traps
             //int typeC = rand.nextInt(8);
             int typeC = rand.nextInt(1);
@@ -90,22 +90,22 @@ public class netherGenerator extends BlockPopulator {
             if(randor.nextInt(100) < VeryDangerousNether.nspikechance) {
                 createSpike2(cXOff + 7, cZOff + 7, wor);
             }
-            if(true) {
+            if(randor.nextInt(100) < VeryDangerousNether.mushroomchance) {
                 createMushroom2(cXOff + rand.nextInt(6) + 2, cZOff + rand.nextInt(6) + 2, wor);
             }
             if(randor.nextInt(20) == 0) {
                 createBurntTrees(cXOff + 7, cZOff + 7, wor);
             }
-            if(randor.nextInt(VeryDangerousNether.webchance+1)==0) {
+            if(randor.nextInt(100) < VeryDangerousNether.webchance) {
                 //createWebs(cXOff+ rand.nextInt(10) + 1, cZOff+ rand.nextInt(10) + 1, wor);
                 //createWebs(cXOff+ rand.nextInt(10) + 1, cZOff+ rand.nextInt(10) + 1, wor);
                 //createWebs(cXOff+ rand.nextInt(10) + 1, cZOff+ rand.nextInt(10) + 1, wor);
                 createWebs2(cXOff + 7, cZOff + 7, wor);
             }
-            if(randor.nextInt(VeryDangerousNether.mushchance+1)==0) {
+            if(randor.nextInt(100) < VeryDangerousNether.mushchance) {
                 createMushroom(cXOff+ rand.nextInt(5) + 5, cZOff+ rand.nextInt(5) + 5, wor);
             }
-            if(randor.nextInt(VeryDangerousNether.coralchance+1)==0) {
+            if(randor.nextInt(100) < VeryDangerousNether.coralchance) {
                 //createCoralGrass(cXOff+ rand.nextInt(3) + 6, cZOff+ rand.nextInt(3) + 6, wor);
                 createCoralGrass2(cXOff + rand.nextInt(2) + 6, cZOff + rand.nextInt(2) + 6, wor);
                 createCoralGrass2(cXOff + rand.nextInt(2) + 6, cZOff + rand.nextInt(2) + 6, wor);
