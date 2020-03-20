@@ -38,15 +38,15 @@ wither_potion_drop_chance: 2
 haste_potion_drop_chance: 2
 
 #Structure spawn rate/percentage chance
-all_structures_chance: 0
-web_vine_chance: 0
-mushroom_chance: 0
-nether_spike_chance: 0
+all_structures_chance: 60
+web_vine_chance: 50
+mushroom_chance: 50
+nether_spike_chance: 50
 nether_World_height: 120
-coral_chance: 0
-rose_chance: 0
-mushrooms_chance: 0
-replace_netherrack_chance: 0
+coral_chance: 50
+rose_chance: 50
+mushrooms_chance: 50
+replace_netherrack_chance: 20
 
 #Enable custom mobs
 spawn_molten: true

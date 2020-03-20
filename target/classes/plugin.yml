@@ -1,6 +1,6 @@
 name: VeryDangerousNether
 version: 1.0-SNAPSHOT
-main: verydangerousnether.verydangerousnether.VeryDangerousNether
+main: verydangerousnether.verydangerousnether.main
 api-version: 1.15
 
 commands:
