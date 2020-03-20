@@ -78,32 +78,34 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 
     @Override
     public void onEnable() {
-        configuration = (YamlConfiguration) getConfig();
-        createConfigFol();
+
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
         this.getServer().getPluginManager().registerEvents(this, this);
-        ambients = config.getBoolean("Enable Ambient Sounds ");
-        caveents = config.getBoolean("Enable Custom Mobs ");
-        webchance = config.getInt("Web Vine Chance ");
-        mushchance = config.getInt("Mushroom Chance ");
-        nethstruct = config.getBoolean("Enable Nether Structures ");
-        structchance = config.getInt("All Structures Chance ");
-        nspikechance = config.getInt("Nether Spike Chance ");
-        coralchance = config.getInt("Coral Chance ");
-        rosechance = config.getInt("Rose Chance ");
-        newFire = config.getBoolean("Enable Better Fire ");
-        mushroomchance = config.getInt("Mushrooms Chance ");
-        replacerackchance = config.getInt("Replace Netherrack Chance ");
-        nheight = config.getInt("Nether World Height ");
-        mobNames.add(config.getString("Molten = "));
-        mobNames.add(config.getString("Fireball = "));
-        mobNames.add(config.getString("Inferno = "));
-        mobNames.add(config.getString("Old Shadow = "));
-        mobNames.add(config.getString("Sherogath = "));
-        mobNames.add(config.getString("Sadness = "));
-        mobNames.add(config.getString("Necromancer = "));
-        mobNames.add(config.getString("Alpha Pigman = "));
-        worlds = (List<String>) config.getList("Enabled Worlds - If Left Blank Will Just Use default world ");
-        int d = config.getInt("Hungering Darkness Damage ");
+        ambients = config.getBoolean("enable_ambient_sounds");
+        caveents = config.getBoolean("enable_custom_mobs");
+        webchance = config.getInt("web_vine_chance");
+        mushchance = config.getInt("mushroom_chance");
+        nethstruct = config.getBoolean("enable_nether_structures");
+        structchance = config.getInt("all_structures_chance");
+        nspikechance = config.getInt("nether_spike_chance");
+        coralchance = config.getInt("coral_chance");
+        rosechance = config.getInt("rose_chance");
+        newFire = config.getBoolean("enable_better_fire");
+        mushroomchance = config.getInt("mushrooms_chance");
+        replacerackchance = config.getInt("replace_netherrack_chance");
+        nheight = config.getInt("nether_world_height");
+        mobNames.add(config.getString("molten"));
+        mobNames.add(config.getString("fireball"));
+        mobNames.add(config.getString("inferno"));
+        mobNames.add(config.getString("old_shadow"));
+        mobNames.add(config.getString("sherogath"));
+        mobNames.add(config.getString("sadness"));
+        mobNames.add(config.getString("necromancer"));
+        mobNames.add(config.getString("alpha_pigman"));
+        worlds = (List<String>) config.getList("enabled_worlds");
+        int d = config.getInt("hungering_darkness_damage");
         if(d > 200) {
             damage = 200;
         }
@@ -149,7 +151,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                if(caveents==true||config.getBoolean("Enable Lava Burns ")==true) {
+                if(caveents==true||config.getBoolean("enable_lava_burns")==true) {
                     betterEffectLooper();
                 }
             }
@@ -186,12 +188,12 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             @Override
             public void run() {
                 try {
-                    if(config.getBoolean("Enable Lava Spouts ")) {
+                    if(config.getBoolean("enable_lava_spouts")) {
                         for(String namew : worlds) {
                             World wor = Bukkit.getWorld(namew);
                             if (wor != null) {
                                 for (Player p : wor.getPlayers()) {
-                                    if(randor.nextInt(3)==1&&(config.getBoolean("Enable Lava Spouts "))) {
+                                    if(randor.nextInt(3)==1&&(config.getBoolean("enable_lava_spouts"))) {
                                         doLavaSpout(p);
                                     }
                                 }
@@ -248,7 +250,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             @Override
             public void run() {
                 try {
-                    if(config.getBoolean("Enable Falling Nether ")) {
+                    if(config.getBoolean("enable_falling_nether")) {
                         for(String namew : worlds) {
                             World wor = Bukkit.getWorld(namew);
                             if (wor != null) {
@@ -293,6 +295,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         worlds.clear();
     }
 
+    /*
     public void createConfigFol() {
         config.addDefault("Enable Ambient Sounds ", true);
         config.addDefault("Enable Better Fire ", true);
@@ -367,10 +370,12 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         saveConfig();
     }
 
+     */
+
     @EventHandler
     public void setWorld(PlayerJoinEvent e) {
         if(hasWorlds==false) {
-            ambients = config.getBoolean("Enable Ambient Sounds ");
+            ambients = config.getBoolean("enable_ambient_sounds");
         }
         //}
     }
@@ -485,28 +490,28 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             if(event.getEntity() instanceof Monster) {
                 Monster e = (Monster) event.getEntity();
                 if(e.getCustomName()!=null || hasName("nethermob", e)) {
-                    if(hasName(config.getString("Inferno = "), e)) {
+                    if(hasName(config.getString("inferno"), e)) {
                         effectEnts.add(event.getEntity());
                     }
-                    else if(hasName(config.getString("Old Shadow = "), e)) {
+                    else if(hasName(config.getString("old_shadow"), e)) {
                         effectEnts.add(event.getEntity());
                     }
-                    else if(hasName(config.getString("Fireball = "), e)) {
+                    else if(hasName(config.getString("fireball"), e)) {
                         effectEnts.add(event.getEntity());
                     }
-                    else if(hasName(config.getString("Molten = "), e)) {
+                    else if(hasName(config.getString("molten"), e)) {
                         effectEnts.add(event.getEntity());
                     }
-                    else if(hasName(config.getString("Sadness = "), e)) {
+                    else if(hasName(config.getString("sadness"), e)) {
                         effectEnts.add(event.getEntity());
                     }
-                    else if(hasName(config.getString("Sherogath = "), e)) {
+                    else if(hasName(config.getString("sherogath"), e)) {
                         effectEnts.add(event.getEntity());
                     }
                 }
             }
         }
-        if(config.getBoolean("Enable Mean Ghasts ")==true) {
+        if(config.getBoolean("enable_mean_ghasts")==true) {
             if(event.getEntity() instanceof Ghast) {
                 effectEnts.add(event.getEntity());
             }
@@ -535,7 +540,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                             if(exists(((Monster) e).getTarget())) {
                                 String name = e2.getCustomName();
                                 if(name!=null || hasName("nethermob", e)) {
-                                    if(hasName(config.getString("Inferno = "), e)) {
+                                    if(hasName(config.getString("inferno"), e)) {
                                         e2.getWorld().spawnParticle(Particle.FLAME, e2.getEyeLocation(), 1, 0, 0, 0, 0.001);
                                         e2.getWorld().playSound(e2.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1, 2);
                                         if(getLookingAt((LivingEntity) e2, (LivingEntity) ((Monster) e).getTarget())) {
@@ -551,7 +556,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                                             }
                                         }
                                     }
-                                    else if(hasName(config.getString("Molten = "), e)) {
+                                    else if(hasName(config.getString("molten"), e)) {
                                         if(randor.nextInt(14)==1) {
                                             e.getLocation().getBlock().setType(Material.FIRE);
                                         }
@@ -563,7 +568,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                                             e2.getWorld().spawnParticle(Particle.valueOf("FALLING_LAVA"), e2.getLocation().add(0, 1, 0), 6, 0.2, 0.5, 0.2, 0.005);
                                         }
                                     }
-                                    else if(hasName(config.getString("Old Shadow = "), e)) {
+                                    else if(hasName(config.getString("old_Shadow"), e)) {
                                         e2.getWorld().playSound(e2.getLocation(), Sound.ENTITY_HORSE_HURT, 1, 2);
                                         if(e2.getLocation().getBlock().getLightLevel()>=12) {
                                             int radius = 4;
@@ -595,7 +600,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                                             e2.getWorld().spawnParticle(Particle.SMOKE_NORMAL, e2.getLocation().add(0, 1, 0), 10, 1,1,1,0.001);
                                         }
                                     }
-                                    else if(hasName(config.getString("Sadness = "), e)) {
+                                    else if(hasName(config.getString("sadness"), e)) {
                                         if(e2.hasPotionEffect(PotionEffectType.SLOW)) {
                                             Entity e3 = ((Monster) e2).getTarget();
                                             if(e3 != null) {
@@ -613,11 +618,11 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                                             }
                                         }
                                     }
-                                    else if(hasName(config.getString("Fireball = "), e)) {
+                                    else if(hasName(config.getString("fireball"), e)) {
                                         e2.getWorld().spawnParticle(Particle.FLAME, e2.getLocation().add(0, e2.getEyeHeight(), 0), 5, 0.1, 0.1, 0.1, 0.005);
                                         e2.getWorld().spawnParticle(Particle.LAVA, e2.getLocation().add(0, e2.getEyeHeight(), 0), 1, 0.1, 0.1, 0.1, 0.005);
                                     }
-                                    else if(hasName(config.getString("Sherogath = "), e)) {
+                                    else if(hasName(config.getString("sherogath"), e)) {
                                         e2.getWorld().spawnParticle(Particle.BARRIER, e2.getLocation() ,1);
                                         if(randor.nextInt(14)==1) {
                                             ((Player) ((Monster) e2).getTarget()).playSound(((Player) ((Monster) e2).getTarget()).getLocation(), Sound.ENCHANT_THORNS_HIT, (float) .04, (float) .2);
@@ -763,7 +768,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                 if(caveents==true) {
                     if (e instanceof PigZombie) {
                         if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && (b.getType()==Material.NETHERRACK || b.getType()==Material.SOUL_SAND)) {
-                            if(randor.nextInt(config.getInt("Mob Spawn Chance ")+1)==0) {
+                            if(randor.nextInt(100) < config.getInt("mob_spawn_chance")) {
                                 doMobSpawns(e);
                             }
                         }
@@ -781,7 +786,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     public void doLightning(Player p) {
         try {
             if(inHell(p.getLocation().getBlock())) {
-                if(randor.nextInt(config.getInt("Lightning Chance ")+1)==0) {
+                if(randor.nextInt(100) < config.getInt("lightning_chance")) {
                     Location l = p.getLocation();
                     l.getWorld().strikeLightning(l.add((getRandValue() * randor.nextInt(160)), 1, (getRandValue() * randor.nextInt(160))));
                 }
@@ -815,7 +820,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 
     @EventHandler
     public void onWalke(PlayerMoveEvent event) {
-        if (config.getBoolean("Enable Ambient Sounds ")==true) {
+        if (config.getBoolean("enable_ambient_sounds")==true) {
             Player p = event.getPlayer();
             if(worlds.contains(event.getPlayer().getWorld().getName())) {
                 if (!(((int) event.getFrom().getX() == (int) event.getTo().getX())
@@ -853,8 +858,8 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     return;
                 }
                 else if ((type == Material.NETHERRACK || type == Material.MOSSY_COBBLESTONE) && randor.nextInt(2) == 1) {
-                    if(!config.getString("Netherrack Step Sound ").equals("NONE")) {
-                        p.getWorld().playSound(p.getLocation(), Sound.valueOf(config.getString("Netherrack Step Sound ")), (float) 0.08, (float) 1.3);
+                    if(!config.getString("netherrack_step_sound").equals("NONE")) {
+                        p.getWorld().playSound(p.getLocation(), Sound.valueOf(config.getString("netherrack_step_sound")), (float) 0.08, (float) 1.3);
                         return;
                     }
                 }
@@ -866,7 +871,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     }
 
     public void doSound(Player p) {
-        if (config.getBoolean("Enable Ambient Sounds ")==false) {
+        if (config.getBoolean("enable_ambient_sounds")==false) {
             return;
         }
         if (inHell(p.getLocation().getBlock())) {
@@ -884,7 +889,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             }
             if (randor.nextInt(155) == 1) {
                 int random = randor.nextInt(2);
-                boolean enderman = config.getBoolean("Enderman Growl replace Enderdragon Growl ");
+                boolean enderman = config.getBoolean("enderman_growl_replace_enderdragon_growl");
                 if(enderman == false) {
                     try {
                         if (random == 1) {
@@ -1041,7 +1046,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 
     public void doWind(Player p) {
         try {
-            if ((config.getBoolean("Enable Ambient Sounds ")==false)||(!(p.getLocation().getY()>=config.getInt("Low Y Value Wind ")&&p.getLocation().getY()<=config.getInt("High Y Value Wind ")))) {
+            if ((config.getBoolean("enable_ambient_sounds")==false)||(!(p.getLocation().getY()>=config.getInt("low_y_value_wind")&&p.getLocation().getY()<=config.getInt("high_y_value_wind")))) {
                 return;
             }
             if (inHell(p.getLocation().getBlock())) {
@@ -1057,11 +1062,11 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     }
                 }
                 if (randor.nextInt(2) == 1) {
-                    p.playSound(p.getLocation().add(0, config.getDouble("Wind Volume - lower equals louder - "), 0),
-                            Sound.ITEM_ELYTRA_FLYING, SoundCategory.RECORDS, (float) 100, (float) config.getDouble("Wind Pitch - must be between 0 and 2 - "));//.25, 0);
+                    p.playSound(p.getLocation().add(0, config.getDouble("wind_volume"), 0),
+                            Sound.ITEM_ELYTRA_FLYING, SoundCategory.RECORDS, (float) 100, (float) config.getDouble("wind_pitch"));//.25, 0);
                 } else {
-                    p.playSound(p.getLocation().add(0, config.getDouble("Wind Volume - lower equals louder - "), 0),
-                            Sound.ITEM_ELYTRA_FLYING, SoundCategory.RECORDS, (float) 100, (float) config.getDouble("Wind Pitch - must be between 0 and 2 - "));//.25, 0);
+                    p.playSound(p.getLocation().add(0, config.getDouble("wind_volume"), 0),
+                            Sound.ITEM_ELYTRA_FLYING, SoundCategory.RECORDS, (float) 100, (float) config.getDouble("wind_pitch"));//.25, 0);
                 }
 
             }
@@ -1090,7 +1095,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     p.getWorld().getPopulators().add(new netherGenerator());
                 }
             }
-            if (config.getBoolean("Enable Ambient Sounds ")==false) {
+            if (config.getBoolean("enable_ambient_sounds")==false) {
                 return;
             }
             if(worlds.contains(e.getPlayer().getWorld().getName())) {
@@ -1132,7 +1137,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 
     @EventHandler
     public void onWalk(PlayerMoveEvent event) {
-        if(config.getBoolean("Soulsand Slowness ") == true) {
+        if(config.getBoolean("soulsand_slowness") == true) {
             try {
                 Player p = event.getPlayer();
                 if(!worlds.contains(p.getWorld().getName())) {
@@ -1153,7 +1158,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                         }
                     }
                 }
-                if(randor.nextInt(config.getInt("Netherack Melting Chance ")+1)==0) {
+                if(randor.nextInt(100) < config.getInt("netherack_melting_chance")) {
                     if(p.getLocation().subtract(0, 1, 0).getBlock().getType()==Material.NETHERRACK){
                         if(inHell(p.getLocation().getBlock())) {
                             Location newL = p.getLocation().subtract(0, 1, 0);
@@ -1193,9 +1198,9 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             return;
         }
         World wor = p.getWorld();
-        if(config.getBoolean("Netherrack Fires ")==true) {
+        if(config.getBoolean("netherrack_fires")==true) {
             try {
-                if(randor.nextInt(config.getInt("Netherrack Fire Chance ")+1)==0) {
+                if(randor.nextInt(100) < config.getInt("netherrack_fire_chance")) {
                     if(dr.getBlock().getType()==Material.NETHERRACK) {
                         Bukkit.getScheduler().runTaskLater(this, () -> dr.getBlock().setType(Material.FIRE), randor.nextInt(5)+5);
                     }
@@ -1215,64 +1220,64 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         int choice = randor.nextInt(8);
         try {
             if(choice == 0) {
-                if(config.getBoolean("Spawn Molten ")==true) {
-                    return config.getString("Molten = ");
+                if(config.getBoolean("spawn_molten")==true) {
+                    return config.getString("molten");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 1) {
-                if(config.getBoolean("Spawn Fireball ")==true) {
-                    return config.getString("Fireball = ");
+                if(config.getBoolean("spawn_fireball")==true) {
+                    return config.getString("fireball");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 2) {
-                if(config.getBoolean("Spawn Inferno ")==true) {
-                    return config.getString("Inferno = ");
+                if(config.getBoolean("spawn_inferno")==true) {
+                    return config.getString("inferno");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 3) {
-                if(config.getBoolean("Spawn Old Shadow ")==true) {
-                    return config.getString("Old Shadow = ");
+                if(config.getBoolean("spawn_old_shadow")==true) {
+                    return config.getString("old_shadow");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 4) {
-                if(config.getBoolean("Spawn Sadness ")==true) {
-                    return config.getString("Sadness = ");
+                if(config.getBoolean("spawn_sadness")==true) {
+                    return config.getString("sadness");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 5) {
-                if(config.getBoolean("Spawn Sherogath ")==true) {
-                    return config.getString("Sherogath = ");
+                if(config.getBoolean("spawn_sherogath")==true) {
+                    return config.getString("sherogath");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 6) {
-                if(config.getBoolean("Spawn Necromancer ")==true) {
-                    return config.getString("Necromancer = ");
+                if(config.getBoolean("spawn_necromancer")==true) {
+                    return config.getString("necromancer");
                 }
                 else {
                     return "";
                 }
             }
             else if(choice == 7) {
-                if(config.getBoolean("Spawn Alpha Pigman ")==true) {
-                    return config.getString("Alpha Pigman = ");
+                if(config.getBoolean("spawn_alpha_pigman")==true) {
+                    return config.getString("alpha_pigman");
                 }
                 else {
                     return "";
@@ -1293,7 +1298,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
             //Test that prints to console
             //console.sendMessage(ChatColor.GREEN + "You are inside the doMobSpawns method");
             try {
-                if(name.equals(config.getString("Fireball = "))) {
+                if(name.equals(config.getString("fireball"))) {
                     Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.SKELETON);
                     e.remove();
                     e = (LivingEntity) e2;
@@ -1316,7 +1321,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                 }
 
                 //HIGH PRIORITY
-                else if(name.equals(config.getString("Necromancer = "))) {
+                else if(name.equals(config.getString("necromancer"))) {
                     if(e.getType()!=EntityType.WITHER_SKELETON) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.WITHER_SKELETON);
                         e.remove();
@@ -1349,7 +1354,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
 
 
                 }
-                else if(name.equals(config.getString("Alpha Pigman = "))) {
+                else if(name.equals(config.getString("alpha_pigman"))) {
                     if(e.getType()!=EntityType.PIG_ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.PIG_ZOMBIE);
                         e.remove();
@@ -1364,7 +1369,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     //Test that prints to console
                     //console.sendMessage(ChatColor.GREEN + "No idea what this does.. but it runs! Maybe it spawns a Alpha Pigman");
                 }
-                else if(name.equals(config.getString("Sherogath = "))) {
+                else if(name.equals(config.getString("sherogath"))) {
                     if(e.getType()!=EntityType.ZOMBIE_VILLAGER) {
                         //Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.ZOMBIE);
                         //((Zombie) e2).setBaby(true);
@@ -1383,7 +1388,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     //Test that prints to console
                     //console.sendMessage(ChatColor.GREEN + "No idea what this does.. but it runs! Maybe it spawns a Sherogath");
                 }
-                else if(name.equals(config.getString("Molten = "))) {
+                else if(name.equals(config.getString("molten"))) {
                     if(e.getType()!=EntityType.ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.ZOMBIE);
                         e.remove();
@@ -1435,7 +1440,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     //Test that prints to console
                     //console.sendMessage(ChatColor.GREEN + "No idea what this does.. but it runs! Maybe it spawns a Sadness");
                 }
-                else if(name.equals(config.getString("Old Shadow = "))) {
+                else if(name.equals(config.getString("old_shadow"))) {
                     if(e.getType()!=EntityType.ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.ZOMBIE);
                         e.remove();
@@ -1450,7 +1455,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                     //Test that prints to console
                     //console.sendMessage(ChatColor.GREEN + "No idea what this does.. but it runs! Maybe it spawns a Old shadow");
                 }
-                else if(name.equals(config.getString("Inferno = "))) {
+                else if(name.equals(config.getString("inferno"))) {
                     Entity scream = e.getWorld().spawnEntity(e.getLocation().add(0, 1, 0), EntityType.ZOMBIE_VILLAGER);
                     ((ZombieVillager) scream).setBaby(true);
                     EntityEquipment ee = ((Monster) scream).getEquipment();
@@ -1495,25 +1500,25 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         }
         World wor = event.getEntity().getWorld();
         if (event.getDamager() instanceof Monster && event.getEntity() instanceof Player) {
-            if(hasName(config.getString("Molten = "), event.getDamager())) {
+            if(hasName(config.getString("molten"), event.getDamager())) {
                 if (randor.nextInt(2) == 1) {
                     ((LivingEntity) event.getEntity()).setFireTicks(60);
                 }
                 return;
             }
-            else if(hasName(config.getString("Alpha Pigman = "), event.getDamager())) {
+            else if(hasName(config.getString("alpha_pigman"), event.getDamager())) {
                 ((LivingEntity) event.getEntity())
                         .addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 75, 1));
                 return;
             }
-            else if(hasName(config.getString("Sherogath = "), event.getDamager())) {
+            else if(hasName(config.getString("sherogath"), event.getDamager())) {
                 lagPlayer((LivingEntity) event.getEntity(), 0, randor.nextInt(10)+5);
                 return;
             }
         }
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Monster) {
             if(randor.nextInt(6)==1) {
-                if(hasName(config.getString("Sadness = "), event.getEntity())) {
+                if(hasName(config.getString("sadness"), event.getEntity())) {
                     if(randor.nextInt(3)==1) {
                         event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ENTITY_WOLF_DEATH, 1, 0);
                     }
@@ -1533,13 +1538,13 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         }
         World wor = event.getEntity().getWorld();
         if(!event.isCancelled()) {
-            if(hasName(config.getString("Necromancer = "), event.getEntity())) {
+            if(hasName(config.getString("necromancer"), event.getEntity())) {
                 Vector v2 = event.getProjectile().getVelocity();
                 event.getProjectile().remove();
                 event.getEntity().launchProjectile(WitherSkull.class, v2);
                 return;
             }
-            else if(hasName(config.getString("Fireball = "), event.getEntity())) {
+            else if(hasName(config.getString("fireball"), event.getEntity())) {
                 Vector v2 = event.getProjectile().getVelocity();
                 event.getProjectile().remove();
                 event.getEntity().launchProjectile(SmallFireball.class, v2);
@@ -1572,7 +1577,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     @EventHandler
     public void onPlace(PlayerBucketEmptyEvent e) {
         if(!e.isCancelled()) {
-            if(config.getBoolean("Enable Lava Placement ")==true) {
+            if(config.getBoolean("enable_lava_placement")==true) {
                 Player p = e.getPlayer();
                 try {
                     if(worlds.contains(p.getWorld().getName())) {
@@ -1611,7 +1616,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     @EventHandler
     public void onFill(PlayerBucketFillEvent e) {
         if(!e.isCancelled()) {
-            if(config.getBoolean("Enable Lava Placement ")==true) {
+            if(config.getBoolean("enable_lava_placement")==true) {
                 Player p = e.getPlayer();
                 try {
                     if(worlds.contains(p.getWorld().getName())) {
@@ -1650,7 +1655,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     @EventHandler
     public void onLavaHeld(PlayerItemHeldEvent e) {
         try {
-            if(config.getBoolean("Enable Lava Burns ")==true) {
+            if(config.getBoolean("enable_lava_burns")==true) {
                 Player p = e.getPlayer();
                 if(worlds.contains(p.getWorld().getName())) {
                     if(p.getInventory().getItem(e.getNewSlot())!=null) {
@@ -1678,7 +1683,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     @EventHandler
     public void onGhastLaunch(ProjectileLaunchEvent event) {
         try {
-            if(config.getBoolean("Enable Mean Ghasts ")==true) {
+            if(config.getBoolean("enable_mean_ghasts")==true) {
                 Entity e = event.getEntity();
                 if(worlds.contains(e.getWorld().getName())) {
                     if(e instanceof Fireball) {
@@ -1746,9 +1751,9 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                 return;
             }
             World wor = p.getWorld();
-            if(config.getBoolean("Enable Falling Nether ")) {
+            if(config.getBoolean("enable_falling_nether ")) {
                 try {
-                    if(randor.nextInt(config.getInt("Falling Nether Chance")+1)==0) {
+                    if(randor.nextInt(100) < config.getInt("falling_nether_chance")) {
                         Block b1 = getNetherBlock(p);
                         if(b1 == null) {
                             return;
@@ -1801,18 +1806,18 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
     public void doSpook(EntityDeathEvent event) {
         if(event.getEntity() instanceof PigZombie) {
             try {
-                if(config.getBoolean("Enable Alpha Pigman Sword Drop ")==true&&worlds.contains(event.getEntity().getWorld().getName())) {
+                if(config.getBoolean("enable_alpha_pigman_sword_drop")==true&&worlds.contains(event.getEntity().getWorld().getName())) {
                     boolean isMagma = false;
-                    if((event.getEntity()).hasMetadata(config.getString("Alpha Pigman = "))) {
+                    if((event.getEntity()).hasMetadata(config.getString("alpha_pigman"))) {
                         isMagma = true;
                     }
                     else if(event.getEntity().getCustomName() != null) {
-                        if (event.getEntity().getCustomName().equals(config.getString("Alpha Pigman = "))){
+                        if (event.getEntity().getCustomName().equals(config.getString("alpha_pigman"))){
                             isMagma = true;
                         }
                     }
                     if(isMagma == true) {
-                        if (randor.nextInt(config.getInt("Alpha Pigman Sword Drop Chance ")) == 0) {
+                        if (randor.nextInt(100) < config.getInt("alpha_pigman_sword_drop_chance")) {
                             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
                             ItemMeta itemmeta = item.getItemMeta();
                             if(randor.nextBoolean()==true) {
@@ -1871,8 +1876,8 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         try {
             if(worlds.contains(wor.getName())) {
                 if (event.getEntity() instanceof PigZombie) {
-                    if(config.getBoolean("Haste Potion Drops ")) {
-                        if (randor.nextInt(config.getInt("Haste Potion Drop Chance ")+1) == 0) {
+                    if(config.getBoolean("haste_potion_drops")) {
+                        if (randor.nextInt(100) < config.getInt("haste_potion_drop_chance")) {
                             int choice = randor.nextInt(3);
                             if (choice == 0) {
                                 int choice2 = randor.nextInt(3);
@@ -1935,8 +1940,8 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
                         }
                     }
                 }else if (event.getEntity() instanceof WitherSkeleton) {
-                    if(config.getBoolean("Wither Potion Drops ")) {
-                        if (randor.nextInt(config.getInt("Wither Potion Drop Chance ")+1) == 0) {
+                    if(config.getBoolean("wither_potion_drops")) {
+                        if (randor.nextInt(100) < config.getInt("wither_potion_drop_chance")) {
                             int choice = randor.nextInt(4);
                             if (choice == 0) {
                                 ItemStack item = new ItemStack(Material.LINGERING_POTION);
@@ -2090,7 +2095,7 @@ public class VeryDangerousNether extends JavaPlugin implements Listener, Command
         if(worlds.contains(e.getEntity().getWorld().getName()) && newFire) {
             if(e.getEntity().getLocation().getBlock().getBiome() == Biome.NETHER) {
                 if(e.getEntity() instanceof LivingEntity && (!(e.getEntity().hasMetadata("player")))) {
-                    if((e instanceof Blaze || e instanceof Ghast || e instanceof WitherSkeleton || e instanceof PigZombie) || hasName(config.getString("Molten = "), e.getEntity())) {
+                    if((e instanceof Blaze || e instanceof Ghast || e instanceof WitherSkeleton || e instanceof PigZombie) || hasName(config.getString("molten"), e.getEntity())) {
                         return;
                     }
                     onFire.add((LivingEntity) e.getEntity());
