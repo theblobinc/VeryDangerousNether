@@ -21,7 +21,7 @@ public class WIElistener implements Listener {
         //System.out.println(utils.chat("&6checking if netherModule is enabled"));
         if(plugin.getConfig().getBoolean("nm-enabled")) {
             if(isNether(w)) {
-                System.out.println(utils.chat("&6netherModule enabled"));
+                System.out.println(utils.chat("&6VDN enabled"));
                 event.getWorld().getPopulators().add(new netherGenerator());
                 event.getWorld().getPopulators().add(new netherAdditionsGenerator());
             }

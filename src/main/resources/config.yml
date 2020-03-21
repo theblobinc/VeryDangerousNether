@@ -3,6 +3,8 @@
 #+  C O N F I G  +
 #+++++++++++++++++
 
+nm-enabled: true
+
 #Enable different additions in nether
 enable_ambient_sounds: true
 enable_better_fire: true
@@ -23,11 +25,11 @@ extended_wither_boss: false
 enderman_growl_replace_enderdragon_growl: false
 
 #Spawn rate/percentage chances
-lightning_chance: 0
+lightning_chance: 5
 netherack_melting_chance: 18
 netherrack_fire_chance: 10
-mob_spawn_chance: 5
-falling_nether_chance: 0
+mob_spawn_chance: 100
+falling_nether_chance: 1
 alpha_pigman_sword_drop_chance: 1
 wind_volume: 800 #-lower equals louder
 wind_pitch: 0 #-must be between 0 and 2
@@ -38,15 +40,15 @@ wither_potion_drop_chance: 2
 haste_potion_drop_chance: 2
 
 #Structure spawn rate/percentage chance
-all_structures_chance: 60
+all_structures_chance: 65
 web_vine_chance: 50
-mushroom_chance: 50
-nether_spike_chance: 50
-nether_World_height: 120
-coral_chance: 50
-rose_chance: 50
-mushrooms_chance: 50
-replace_netherrack_chance: 20
+mushroom_chance: 35
+nether_spike_chance: 60
+nether_world_height: 120
+coral_chance: 60
+rose_chance: 60
+mushrooms_chance: 35
+replace_netherrack_chance: 50
 
 #Enable custom mobs
 spawn_molten: true

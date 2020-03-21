@@ -18,17 +18,15 @@ public class getWorldName implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        Player player = (Player)sender;
         if(command.getName().equalsIgnoreCase("getworldname")) {
-            if (sender instanceof Player) {
-                ((Player) sender).getWorld().generateTree(((Player) sender).getLocation(), TreeType.RED_MUSHROOM);
-                console.sendMessage(ChatColor.GREEN + "World Name = " + ChatColor.RESET + " " + ((Player) sender).getWorld().getName());
-                for(Entity e : ((Player) sender).getNearbyEntities(10, 10, 10)) {
-                    if(e instanceof ArmorStand) {
-                        e.remove();
-                    }
-                }
+            if (sender instanceof Player && player.hasPermission("verydangerousnether.getworldname")) {
+                (player).getWorld().generateTree((player).getLocation(), TreeType.RED_MUSHROOM);
+                console.sendMessage(ChatColor.GREEN + "World Name = " + ChatColor.RESET + " " + (player.getWorld().getName()));
                 return true;
             }
+        } else {
+            player.sendMessage(ChatColor.GOLD + "[VeryDangerousNether]" + ChatColor.DARK_RED + " You don't have the required permission to do this!");
         }
         return true;
     }

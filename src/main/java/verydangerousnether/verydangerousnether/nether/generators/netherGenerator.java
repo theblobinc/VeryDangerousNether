@@ -151,18 +151,24 @@ public class netherGenerator extends BlockPopulator {
             if(yvals!=null) {
                 //System.out.println("Passed yvals check");
                 for(int y : yvals) {
+                    //System.out.println("Checking all yvals");
                     for(int count = 0; count < 35; count++) {
                         Location org = new Location(world, cXOff, y, cZOff);
                         Location l = getRandLoc(new Location(world, cXOff, y, cZOff), 9);
+                        //System.out.println("Right before canplaceblock now");
                         if(canPlaceBlock(l, org.getChunk())) {
+                            //System.out.println("we canplaceBlock");
                             if(isAir(l.getBlock().getType()) && (!l.clone().add(0, 1, 0).getBlock().isPassable())) {
+                                //System.out.println("Its air mydude");
                                 int length = randint.nextInt(10)+7;
                                 for(int count2 = 0; count2 < length; count2++) {
                                     if(isAir(l.getBlock().getType())==false || isAir(l.clone().subtract(0, 1, 0).getBlock().getType())==false) {
+                                        //System.out.println("We just broke..");
                                         break;
                                     }
                                     else {
                                         l.getBlock().setType(Material.COBWEB, false);
+                                        //System.out.println("We made webs chieff");
                                     }
                                     l.subtract(0, 1, 0);
                                 }
