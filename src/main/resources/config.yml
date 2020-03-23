@@ -26,7 +26,7 @@ enderman_growl_replace_enderdragon_growl: false
 
 #Spawn rate/percentage chances
 lightning_chance: 5
-netherack_melting_chance: 18
+netherack_melting_chance: 3
 netherrack_fire_chance: 10
 mob_spawn_chance: 100
 falling_nether_chance: 1

@@ -71,7 +71,7 @@ public class doMobSpawns implements Listener {
                     return;
                 }
             } else {
-                System.out.println("Noooo, it wont enter the if statement, are u sure caveEnts is true?");
+                //System.out.println("Noooo, it wont enter the if statement, are u sure caveEnts is true?");
             }
         }
     }

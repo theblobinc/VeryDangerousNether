@@ -54,8 +54,8 @@ public class ambiendSounds implements Listener {
                     }
                     return;
                 } else if ((type == Material.NETHERRACK || type == Material.MOSSY_COBBLESTONE) && randint.nextInt(2) == 1) {
-                    if (!plugin.getConfig().getString("Netherrack Step Sound ").equals("NONE")) {
-                        p.getWorld().playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("Netherrack Step Sound ")), (float) 0.08, (float) 1.3);
+                    if (!plugin.getConfig().getString("netherrack_Step_sound").equals("NONE")) {
+                        p.getWorld().playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("netherrack_step_sound")), (float) 0.08, (float) 1.3);
                         return;
                     }
                 }
@@ -66,7 +66,7 @@ public class ambiendSounds implements Listener {
     }
 
     public void doSound(Player p) {
-        if (plugin.getConfig().getBoolean("Enable Ambient Sounds ")==false) {
+        if (plugin.getConfig().getBoolean("enable_Ambient_sounds")==false) {
             return;
         }
         if (nether.inHell(p.getLocation().getBlock())) {
@@ -84,7 +84,7 @@ public class ambiendSounds implements Listener {
             }
             if (randint.nextInt(155) == 1) {
                 int random = randint.nextInt(2);
-                boolean enderman = plugin.getConfig().getBoolean("Enderman Growl replace Enderdragon Growl ");
+                boolean enderman = plugin.getConfig().getBoolean("rnderman_growl_replace_enderdragon_growl");
                 if(enderman == false) {
                     try {
                         if (random == 1) {

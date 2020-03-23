@@ -20,7 +20,7 @@ public class soulsandSlowness implements Listener {
 
     @EventHandler
     public void onWalk(PlayerMoveEvent event) {
-        if(plugin.getConfig().getBoolean("Soulsand Slowness ") == true) {
+        if(plugin.getConfig().getBoolean("soulsand_slowness") == true) {
             try {
                 Player p = event.getPlayer();
                 if(!nether.worlds.contains(p.getWorld().getName())) {
@@ -41,7 +41,7 @@ public class soulsandSlowness implements Listener {
                         }
                     }
                 }
-                if(randint.nextInt(plugin.getConfig().getInt("Netherack Melting Chance ")+1)==0) {
+                if(randint.nextInt(100) < plugin.getConfig().getInt("netherrack_melting_chance")) {
                     if(p.getLocation().subtract(0, 1, 0).getBlock().getType()== Material.NETHERRACK){
                         if(nether.inHell(p.getLocation().getBlock())) {
                             Location newL = p.getLocation().subtract(0, 1, 0);
