@@ -1,7 +1,7 @@
 name: VeryDangerousNether
 version: ${project.version}
 main: verydangerousnether.verydangerousnether.main
-api-version: 1.13
+api-version: 1.14
 load: STARTUP
 
 commands:

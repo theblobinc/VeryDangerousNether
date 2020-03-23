@@ -28,7 +28,7 @@ public class netherAdditionsGenerator extends BlockPopulator {
             int cZOff = cZ;
 
             if(randint.nextBoolean() && (randint.nextInt(100) < nether.rose_chance)) {
-                if (!Bukkit.getBukkitVersion().contains("1.15")) {
+                if (!Bukkit.getBukkitVersion().contains("1.14")) {
                     createWitherRoseGrass(cXOff + random.nextInt(3) + 6, cZOff + random.nextInt(3) + 6, world);
                 }
             } else if (randint.nextInt(100) < nether.mushroom_chance) {
