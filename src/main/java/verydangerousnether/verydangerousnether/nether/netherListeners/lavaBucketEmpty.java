@@ -22,9 +22,8 @@ public class lavaBucketEmpty implements Listener {
     public void onPlace(PlayerBucketEmptyEvent e) {
         if(!e.isCancelled()) {
             if(plugin.getConfig().getBoolean("enable_lava_placement")==true) {
-                System.out.println("Lava place event triggerd");
+                //System.out.println("Lava place event triggerd");
                 Player p = e.getPlayer();
-                try {
                     if(nether.worlds.contains(p.getWorld().getName())) {
                         if(e.getBucket()!=null) {
                             if(e.getBucket()== Material.LAVA_BUCKET) {
@@ -50,10 +49,6 @@ public class lavaBucketEmpty implements Listener {
                             }
                         }
                     }
-                }
-                catch(Exception ee) {
-                    System.out.println(ChatColor.RED + "Uh oh error inside onPlace.");
-                }
             }
         }
     }
