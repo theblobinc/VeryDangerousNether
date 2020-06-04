@@ -111,6 +111,8 @@ public class nether implements Listener {
         }
     }
 
+
+
     public void betterEffectLooper() {
         if(!effectEnts.isEmpty()) {
             List<Entity> tempEntss = new ArrayList<Entity>(effectEnts);
@@ -286,16 +288,18 @@ public class nether implements Listener {
         return dot > 0.99D;
     }
 
-    public void doLightning(Player p) {
+    @EventHandler
+    public void doLightning(PlayerMoveEvent e) {
+        Player p = e.getPlayer();
         try {
             if(inHell(p.getLocation().getBlock())) {
-                if(randint.nextInt(100) < plugin.getConfig().getInt("lightning_chance")) {
+                if(randint.nextDouble() < plugin.getConfig().getDouble("lightning_chance")) {
                     Location l = p.getLocation();
                     l.getWorld().strikeLightning(l.add((getRandValue() * randint.nextInt(160)), 1, (getRandValue() * randint.nextInt(160))));
                 }
             }
         }
-        catch(Exception e) {
+        catch(Exception ex) {
             System.out.println(ChatColor.RED + "Uh oh error inside doLightning.");
         }
     }

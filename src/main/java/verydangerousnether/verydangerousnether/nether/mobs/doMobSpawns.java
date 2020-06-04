@@ -32,36 +32,24 @@ public class doMobSpawns implements Listener {
 
     @EventHandler
     public void deleteLightLevel(CreatureSpawnEvent event) {
-        //System.out.println("CreatureSpawnEvent triggered");
         if(event.isCancelled()) {
             return;
         }
         Entity e = event.getEntity();
         if (exists(e)) {
-            //System.out.println("exists true");
-            /*
             if(!nether.worlds.contains(e.getWorld().getName())) {
-                System.out.println("Went inside nether.worlds.contains");
                 return;
             }
-
-             */
             World wor = event.getEntity().getWorld();
             if(nether.caveEnts) {
-                //System.out.println("CaveEnts = true");
                 Block b = e.getLocation().subtract(0, 1, 0).getBlock();
                 if(b==null) {
-                    //System.out.println("b = null");
                     return;
                 }
                 if(nether.caveEnts) {
-                    //System.out.println("CaveEnts = still true");
                     if (e instanceof PigZombie) {
-                        //System.out.println("e is instance of PigZombie");
                         if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && (b.getType()== Material.NETHERRACK || b.getType()== Material.SOUL_SAND)) {
-                            //System.out.println("Spawn reason natural and block is netherrack or soulsand");
                             if(randint.nextInt(100) < nether.mob_spawn_chance) {
-                                //System.out.println("random number between 0-100 is less that mob_spawn_chance, triggering soMobSpawns on entity e");
                                 doMobSpawns(e);
                             }
                         }
@@ -70,22 +58,17 @@ public class doMobSpawns implements Listener {
                 else {
                     return;
                 }
-            } else {
-                //System.out.println("Noooo, it wont enter the if statement, are u sure caveEnts is true?");
             }
         }
     }
 
     public void doMobSpawns(Entity entitye) {
-        //System.out.println(ChatColor.GREEN + "You are inside the doMobSpawns method");
         LivingEntity e = (LivingEntity) entitye;
         String name = mobTypes();
         Random spawntype = new Random();
         if (e != null && !e.isDead()) {
-            //Test that prints to console
-            //System.out.println(ChatColor.GREEN + "You are inside the doMobSpawns method and if checker");
             try {
-                if(name.equals(plugin.getConfig().getString("fireball"))) {
+                if(name.equals(plugin.getConfig().getString("fireball")) && plugin.getConfig().getBoolean("spawn_fireball")) {
                     Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.SKELETON);
                     e.remove();
                     e = (LivingEntity) e2;
@@ -96,19 +79,16 @@ public class doMobSpawns implements Listener {
                     myAwesomeSkullMeta.setOwner("Spe");
                     myAwesomeSkull.setItemMeta(myAwesomeSkullMeta);
                     ee.setHelmet(myAwesomeSkull);
-                    //ee.setHelmet(getSkull("http://textures.minecraft.net/texture/b6965e6a58684c277d18717cec959f2833a72dfa95661019dbcdf3dbf66b048"));
-
                     ee.setHelmetDropChance(0);
                     e.setCustomName(name);
                     e.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     e.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Something with fireballs");
+                    e.setRemoveWhenFarAway(true);
                 }
 
                 //HIGH PRIORITY
-                else if(name.equals(plugin.getConfig().getString("necromancer"))) {
+                else if(name.equals(plugin.getConfig().getString("necromancer")) && plugin.getConfig().getBoolean("spawn_necromancer")) {
                     if(e.getType()!= EntityType.WITHER_SKELETON) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.WITHER_SKELETON);
                         e.remove();
@@ -132,16 +112,13 @@ public class doMobSpawns implements Listener {
                     myAwesomeSkullMeta.setOwner("MHF_WSkeleton");
                     myAwesomeSkull.setItemMeta(myAwesomeSkullMeta);
                     ee.setHelmet(myAwesomeSkull);
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Necromancer");
-                    //ee.setHelmet(getSkull("http://textures.minecraft.net/texture/ee280cefe946911ea90e87ded1b3e18330c63a23af5129dfcfe9a8e166588041"));
                     ee.setChestplate(lchest);
                     ee.setBoots(lchest3);
                     ee.setItemInMainHand(new ItemStack(Material.BOW));
-
+                    e.setRemoveWhenFarAway(true);
 
                 }
-                else if(name.equals(plugin.getConfig().getString("alpha_pigman"))) {
+                else if(name.equals(plugin.getConfig().getString("alpha_pigman")) && plugin.getConfig().getBoolean("spawn_alpha_pigman")) {
                     if(e.getType()!= EntityType.PIG_ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.PIG_ZOMBIE);
                         e.remove();
@@ -153,8 +130,7 @@ public class doMobSpawns implements Listener {
                     e.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     e.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Alpha Pigman");
+                    e.setRemoveWhenFarAway(true);
                 }
                 else if(name.equals(plugin.getConfig().getString("sherogath"))) {
                     if(e.getType()!= EntityType.ZOMBIE_VILLAGER) {
@@ -172,10 +148,9 @@ public class doMobSpawns implements Listener {
                     e.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     e.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Sherogath");
+                    e.setRemoveWhenFarAway(true);
                 }
-                else if(name.equals(plugin.getConfig().getString("molten"))) {
+                else if(name.equals(plugin.getConfig().getString("molten")) && plugin.getConfig().getBoolean("spawn_molten")) {
                     if(e.getType()!= EntityType.ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.ZOMBIE);
                         e.remove();
@@ -207,10 +182,9 @@ public class doMobSpawns implements Listener {
                     e.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     e.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Necromancer");
+                    e.setRemoveWhenFarAway(true);
                 }
-                else if(name.equals(plugin.getConfig().getString("sadness"))) {
+                else if(name.equals(plugin.getConfig().getString("sadness")) && plugin.getConfig().getBoolean("spawn_sadness")) {
                     if(e.getType()!= EntityType.ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.ZOMBIE);
                         e.remove();
@@ -224,10 +198,9 @@ public class doMobSpawns implements Listener {
                     e.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     e.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Sadness");
+                    e.setRemoveWhenFarAway(true);
                 }
-                else if(name.equals(plugin.getConfig().getString("old_shadow"))) {
+                else if(name.equals(plugin.getConfig().getString("old_shadow")) && plugin.getConfig().getBoolean("spawn_old_shadow")) {
                     if(e.getType()!= EntityType.ZOMBIE) {
                         Entity e2 = e.getWorld().spawnEntity(e.getLocation(), EntityType.ZOMBIE);
                         e.remove();
@@ -239,16 +212,15 @@ public class doMobSpawns implements Listener {
                     e.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     e.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Old shadow");
+                    e.setRemoveWhenFarAway(true);
                 }
-                else if(name.equals(plugin.getConfig().getString("inferno"))) {
+                else if(name.equals(plugin.getConfig().getString("inferno")) && plugin.getConfig().getBoolean("spawn_inferno")) {
                     Entity scream = e.getWorld().spawnEntity(e.getLocation().add(0, 1, 0), EntityType.ZOMBIE_VILLAGER);
                     ((ZombieVillager) scream).setBaby(true);
                     EntityEquipment ee = ((Monster) scream).getEquipment();
                     ItemStack myAwesomeSkull = new ItemStack(Material.PLAYER_HEAD, 1);
                     SkullMeta myAwesomeSkullMeta = (SkullMeta) myAwesomeSkull.getItemMeta();
-                    myAwesomeSkullMeta.setOwner("crolin");
+                    myAwesomeSkullMeta.setOwner("Balabix");
                     myAwesomeSkull.setItemMeta(myAwesomeSkullMeta);
                     ee.setHelmet(myAwesomeSkull);
                     //ee.setHelmet(getSkull("http://textures.minecraft.net/texture/f142a35ac0b055ed50a5cbf870b6ef1cc1f94e2642b9ba650c9e0385e6cbe36"));
@@ -265,8 +237,7 @@ public class doMobSpawns implements Listener {
                     scream.setMetadata(name, new FixedMetadataValue(plugin, 0));
                     scream.setMetadata("R", new FixedMetadataValue(plugin, 0));
                     e.setMetadata("nethermob", new FixedMetadataValue(plugin, 0));
-                    //Test that prints to console
-                    //System.out.println(ChatColor.GREEN + "it runs! Maybe it spawns a Inferno");
+                    e.setRemoveWhenFarAway(true);
                 }
             }
             catch(Exception error) {

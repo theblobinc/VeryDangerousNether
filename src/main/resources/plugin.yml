@@ -1,8 +1,11 @@
 name: VeryDangerousNether
-version: ${project.version}
+version: 1.0.4
 main: verydangerousnether.verydangerousnether.main
 api-version: 1.14
 load: STARTUP
+depend:
+  - LibsDisguises
+  - ProtocolLib
 
 commands:
   getworldnamed:
