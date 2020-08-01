@@ -29,8 +29,9 @@ public class onLavaHeld implements Listener {
                         Material m = p.getInventory().getItem(e.getNewSlot()).getType();
                         if(m == Material.LAVA_BUCKET) {
                             if(inHell(p.getLocation().getBlock())) {
-                                if(!nether.effectEnts.contains(p)) {
-                                    nether.effectEnts.add(p);
+                                if(randint.nextInt(10)==0) {
+                                    p.damage(1);
+                                    p.setFireTicks(20);
                                 }
                             }
                         }

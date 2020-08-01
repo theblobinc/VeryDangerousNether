@@ -10,7 +10,8 @@ public class utils {
     Random randint = new Random();
 
     public static String chat (String s){
-        return ChatColor.translateAlternateColorCodes('&', s);
+        String colored = ChatColor.translateAlternateColorCodes('&', s);
+        return colored;
     }
 
     public Location getRandLoc(Location l, int radi) {

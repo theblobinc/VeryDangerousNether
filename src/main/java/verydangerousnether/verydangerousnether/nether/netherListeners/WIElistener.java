@@ -24,6 +24,7 @@ public class WIElistener implements Listener {
                 System.out.println(utils.chat("&6VDN enabled"));
                 event.getWorld().getPopulators().add(new netherGenerator());
                 event.getWorld().getPopulators().add(new netherAdditionsGenerator());
+                //event.getWorld().getPopulators().add(new NetherSchematicDeployer());
             }
         }
     }

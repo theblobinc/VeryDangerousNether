@@ -156,7 +156,7 @@ public class nether implements Listener {
                                         }
                                     }
                                     else if(hasName(plugin.getConfig().getString("old_shadow"), e)) {
-                                        e2.getWorld().playSound(e2.getLocation(), Sound.ENTITY_HORSE_HURT, 1, 2);
+                                        e2.getWorld().playSound(e2.getLocation(), Sound.ENTITY_GUARDIAN_ATTACK, 1, 1);
                                         if(e2.getLocation().getBlock().getLightLevel()>=12) {
                                             int radius = 4;
                                             Location loc = e2.getLocation();
@@ -168,23 +168,34 @@ public class nether implements Listener {
                                                     for (int y = (cy - radius); y < (cy + radius); y++) {
                                                         double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + ((cy - y) * (cy - y));
                                                         Block b = new Location(loc.getWorld(), x, y, z).getBlock();
-                                                        if(b.getType()==Material.TORCH||b.getType()==Material.FIRE||b.getType()==Material.GLOWSTONE||b.getType()==Material.JACK_O_LANTERN||b.getType()==Material.REDSTONE_LAMP||b.getType()==Material.SEA_LANTERN) {
+                                                        if(b.getType()==Material.TORCH||b.getType()==Material.FIRE||b.getType()==Material.GLOWSTONE||b.getType()==Material.JACK_O_LANTERN||b.getType()==Material.REDSTONE_LAMP||b.getType()==Material.SEA_LANTERN || b.getType()==Material.REDSTONE_LAMP || b.getType()==Material.REDSTONE_TORCH || b.getType()==Material.CAMPFIRE || b.getType()==Material.SOUL_CAMPFIRE || b.getType()==Material.SOUL_FIRE || b.getType()==Material.SOUL_TORCH || b.getType()==Material.LANTERN || b.getType()==Material.SOUL_LANTERN) {
                                                             b.setType(Material.AIR);
+                                                            ((Monster) e2).setTarget(null);
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                         else {
-                                            List<Entity> ents = e2.getNearbyEntities(3, 3, 3);
+                                            List<Entity> ents = e2.getNearbyEntities(6, 6, 5);
                                             for(Entity ez : ents) {
                                                 if(ez instanceof LivingEntity) {
-                                                    ((LivingEntity) ez).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,120,1));
-                                                    ((LivingEntity) ez).addPotionEffect(new PotionEffect(PotionEffectType.WITHER,120,0));
+                                                    if (ez instanceof Player) {
+                                                        Player p = (Player) ez;
+                                                        if (p.getGameMode().equals(GameMode.SURVIVAL)) {
+                                                            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,120,1));
+                                                            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,120,0));
+                                                            if (p.getHealth() > 2.0) {
+                                                                p.damage(1);
+                                                                e2.getWorld().spawnParticle(Particle.SMOKE_LARGE, e2.getLocation().add(0, 1, 0), 10, 1,1,1,0.001);
+                                                                e2.getWorld().spawnParticle(Particle.SMOKE_NORMAL, e2.getLocation(), 2);
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                             e2.getWorld().spawnParticle(Particle.SUSPENDED, e2.getLocation().add(0, 1, 0), 230, 1,1,1,0.001);
-                                            e2.getWorld().spawnParticle(Particle.SMOKE_NORMAL, e2.getLocation().add(0, 1, 0), 10, 1,1,1,0.001);
+                                            e2.getWorld().spawnParticle(Particle.SMOKE_LARGE, e2.getLocation().add(0, 1, 0), 10, 1,1,1,0.001);
                                         }
                                     }
                                     else if(hasName(plugin.getConfig().getString("sadness"), e)) {
@@ -315,7 +326,7 @@ public class nether implements Listener {
 
     public static boolean inHell(Block b) {
         try {
-            if(b.getBiome()== Biome.valueOf("HELL")) {
+            if(b.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
                 return true;
             }
             else {
@@ -434,7 +445,7 @@ public class nether implements Listener {
     public void entityOnFireNether(EntityCombustEvent e) {
         if(e.getEntity() instanceof LivingEntity) {
             if(worlds.contains(e.getEntity().getWorld().getName())) {
-                if(e.getEntity().getLocation().getBlock().getBiome() == Biome.NETHER) {
+                if(e.getEntity().getWorld().getEnvironment().equals(World.Environment.NETHER)) {
                     e.setDuration(e.getDuration() * 2);
                 }
             }
@@ -499,7 +510,7 @@ public class nether implements Listener {
     @EventHandler
     public void onSetOnFire(EntityCombustEvent e) {
         if(worlds.contains(e.getEntity().getWorld().getName()) && newFire) {
-            if(e.getEntity().getLocation().getBlock().getBiome() == Biome.NETHER) {
+            if(e.getEntity().getWorld().getEnvironment().equals(World.Environment.NETHER)) {
                 if(e.getEntity() instanceof LivingEntity && (!(e.getEntity().hasMetadata("player")))) {
                     if((e instanceof Blaze || e instanceof Ghast || e instanceof WitherSkeleton || e instanceof PigZombie) || hasName(plugin.getConfig().getString("Molten = "), e.getEntity())) {
                         return;

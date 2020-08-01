@@ -6,6 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import verydangerousnether.verydangerousnether.nether.commands.VDN;
+import verydangerousnether.verydangerousnether.nether.commands.VDNTabCompleter;
+import verydangerousnether.verydangerousnether.nether.generators.NetherStructurePopulator;
+import verydangerousnether.verydangerousnether.nether.mobs.SpawnHandler;
 import verydangerousnether.verydangerousnether.nether.mobs.doMobSpawns;
 import verydangerousnether.verydangerousnether.nether.nether;
 import verydangerousnether.verydangerousnether.nether.netherListeners.*;
@@ -56,9 +60,21 @@ public class main extends JavaPlugin implements Listener {
             Bukkit.getPluginManager().registerEvents(new onMobName(), this);
             Bukkit.getPluginManager().registerEvents(new onPotionDrops(), this);
             Bukkit.getPluginManager().registerEvents(new onTarget(), this);
+            Bukkit.getPluginManager().registerEvents(new NetherStructurePopulator(), this);
             Bukkit.getPluginManager().registerEvents(new soulsandSlowness(), this);
-            Bukkit.getPluginManager().registerEvents(new doMobSpawns(), this);
+            Bukkit.getPluginManager().registerEvents(new Shoot(), this);
+            if (getConfig().getBoolean("enable_custom_mobs")) {
+                Bukkit.getPluginManager().registerEvents(new SpawnHandler(), this);
+            }
+            //Bukkit.getPluginManager().registerEvents(new doMobSpawns(), this);
+            if(getConfig().getBoolean("encrypted_chat")) {
+                Bukkit.getPluginManager().registerEvents(new ChatEditing(), this);
+            }
         }
+
+        //Register command
+        this.getCommand("vdn").setExecutor(new VDN());
+        this.getCommand("vdn").setTabCompleter(new VDNTabCompleter());
 
         nether n = new nether();
         ambiendSounds a = new ambiendSounds();
